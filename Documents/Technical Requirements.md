@@ -1,3 +1,19 @@
+<h1 style="text-align:center">Technical specifications</h1>
+
+Project: Smart signage
+Client: [Signall](https://signall.com/)
+Author: [Léo CHARTIER](https://www.linkedin.com/in/l%C3%A9o-chartier/)
+Team:
+- [Maxime PAGES](https://linkedin.com/in/maxime-pages-551784221) (Project manager)
+- [Mathis KAKAL]() (Program manager)
+- Léo CHARTIER (Technical lead)
+- [Eloi PRIOL](https://linkedin.com/in/eloi-priol-62511b1b8/) (Software engineer)
+- [David CUAHONTE-CUEVAS](https://linkedin.com/in/david-cuahonte-527781221/) (Quality insurance)
+
+
+<br>
+
+
 <details>
 <summary><b id="toc">Table of Content</b></summary>
 
@@ -9,8 +25,6 @@
   - [e. Out of Scope](#e-out-of-scope)
   - [f. Future Goals](#f-future-goals)
 - [2. Approach](#2-approach)
-  - [a. Existing solution](#a-existing-solution)
-  - [b. Selected solution](#b-selected-solution)
 - [3. Further Considerations](#3-further-considerations)
   - [a. Security and privacy](#a-security-and-privacy)
   - [b. Risks](#b-risks)
@@ -34,11 +48,15 @@ The product is a hardware module. It will plug into existing LED cables of signa
 
 ## b. Glossary of Terminology
 
-<!--TODO-->
-*To be completed*
-|     |     |
-| --- | --- |
-|     |     |
+| Name                             | Full name                                         | Definition                                                                          |
+| -------------------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| LED                              | Light-Emitting Diode                              | An electrical component that produces light when powered.                           |
+| LoRa                             | Long-Range                                        | A type of radio transmission.                                                       |
+| LoRaWAN                          | Long-Range Wide Area Network                      | A protocol to talk over LoRa.                                                       |
+| MOSFET                           | Metal–Oxide–Semiconductor Field-Effect Transistor | A type of relay (switch). It allows the control of signals with different voltages. |
+| Protocol                         |                                                   | A defined method of communication between two entities (often electronic devices).  |
+| Sign <br> Signage <br> Signboard |                                                   | A painted board used for advertising. In our case, they are lit up with LEDs.       |
+| Signall                          |                                                   | A French company manufacturing signs.                                               |
 
 ## c. Context
 
@@ -76,26 +94,31 @@ An interface to control the devices is planned as a future project but is not fo
 
 # 2. Approach
 
-## a. Existing solution
-
-<!--TODO-->
-*To be completed*
-
-## b. Selected solution
-
-We will use the (LoRa-E5 Dev Board)[https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html] as it allows for an easy and cheap wireless communication method. The board can run on the same battery for many years meaning less maintenance.
+We will use the [LoRa-E5 Dev Board](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) as it allows for an easy and cheap wireless communication method. The board can run on the same battery for many years meaning less maintenance.
 
 Our device will include a current transformer to detect the 240V before the adaptor, a current sensor to detect the 12V after the adaptor as well as a photoresistor(s) to detect the ambient light level and/or the level emitted by the LEDs.
-Moreover, there will be a (MOSFET)[https://en.wikipedia.org/wiki/MOSFET] to control the dimming of the LEDs.
+Moreover, there will be a [MOSFET](https://en.wikipedia.org/wiki/MOSFET) to control the dimming of the LEDs.
 
 As the number of bytes that can be transmitted via LoRa is very limited, the following codes will be used to signal different messages:
-**The codes will be created after further testing of the hardware limits to ensure optimal use of the limited transmissions.**
-<!--
-TODO
-| Name | Direction | Message | Description |
-| ---- | --------- | ------- | ----------- |
-|      |           |         |             |
--->
+
+| Name                  | Direction | Message                          | Description                                                                                                                                                                                                                                       |
+| --------------------- | --------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OK (NORMAL)           | Send      | 0x00, brightness, luminosity[^2] | Working normally.                                                                                                                                                                                                                                 |
+| OK (MANUAL)           | Send      | 0x01, brightness, luminosity[^2] | Working normally, manual mode.                                                                                                                                                                                                                    |
+| Power failure         | Send      | 0x02, downtime start             | Failure from the powergrid (blackout). `downtime start` is a Unix timestamp.                                                                                                                                                                      |
+| LED failure           | Send      | 0x03, downtime start             | Failure from the LEDs/circuit. `downtime start` is a Unix timestamp.                                                                                                                                                                              |
+| Internal error        | Send      | 0x04, error code                 | An error occured internally in the program.                                                                                                                                                                                                       |
+| Time desync[^1]       | Send      | 0x05, time, luminosity[^2]       | The device detected that its internal clock varies differently from its luminosity reading. The readings must differ over at least three full days.                                                                                               |
+| OK                    | Receive   | 0x00                             | Work normally.                                                                                                                                                                                                                                    |
+| Manual                | Receive   | 0x01, brightness[^2]             | Switch to manual mode: keep the provided brightness until further notice.                                                                                                                                                                         |
+| Automatic             | Receive   | 0x02                             | Switch to automatic mode: set the brightness based on the schedule.                                                                                                                                                                               |
+| Set brightness factor | Receive   | 0x03, factor                     | Set the global brightness factor without changing the entire schedule. `factor` is a percentage integer from 0% to 200%.                                                                                                                          |
+| Set time              | Receive   | 0x04, time                       | Set the time of the internal clock. `time` is a Unix timestamp.                                                                                                                                                                                   |
+| Set schedule[^1]      | Receive   | 0x05, start, end, brightness[^2] | Change the scheduled brightness on the given period. Times are in the form `0b00DDDHHHHHMMMMM` with day in range `[0-8]`, hours in range `[0-23]` and minutes in range `[0-59]`. Monday is represented by `0`, Sunday by `6` and everyday by `7`. |
+
+[^1]: Might be removed later if the client deems it to be unnecessary.
+
+[^2]: The brightness and luminosity values are integers from 0 to 255, where 0 is off/no light and 255 is maximal brightness.
 
 
 
@@ -114,8 +137,11 @@ Our device will be staying outside, prone to the weather and harsh conditions. T
 
 # 4. Impact and testing
 
-<!--TODO-->
-*To be completed*
+We will stay in contact with the client and the users to make sure there is no problem either with the program or the device itself.
+
+Moreover, we will survey the client and users to know what they think and what we could improve.
+
+On the matter of tests, testing real material is quite difficult and might not be feasible. <!--TODO-->
 
 
 
@@ -123,10 +149,21 @@ Our device will be staying outside, prone to the weather and harsh conditions. T
 
 ## a. Timeline
 
-Week 2: Working device connection
-Week 3: Hardware done
-Week 4: Working software MVP
-Week 6: Finished project
+- Week 2: Working device connection
+  - Successful connection to the remote server
+  - Able to flash a program on the board
+
+- Week 3: Hardware done
+  - Schematic done and cleanly put on paper
+  - Cables wired correctly
+  - Fully able to read and write to the correct pins
+
+- Week 4: Working software MVP
+
+- Week 6: Finished project
+  - Protection case for the demo
+  - Final device and program
+  - Prepared for the speech
 
 ## b. Milestones
 
@@ -138,7 +175,7 @@ Week 6: Finished project
 # 6. End Matter
 ## a. References
 
-(LoRaWAN security)[https://lora-alliance.org/resource_hub/lorawan-is-secure-but-implementation-matters/]
+[LoRaWAN security](https://lora-alliance.org/resource_hub/lorawan-is-secure-but-implementation-matters/)
 
 ## b. Acknowledgments
 
