@@ -1,0 +1,17 @@
+Test ID,Test,Worker, date of report, date of test, status, comments
+N°1, Do the led's light up correctly?, David, 04/10/2022,
+N°2, Does the remote control function correctly?, David, 04/10/2022,
+N°3, Does the current arrive correctly to the Leds?,David, 04/10/2022,
+N°4, Does the sensor recognize day and night time?, David, 04/10/2022
+N°5, Does the sensor recognize human beings?,David,04/10/2022
+N°6, Is the device sturdy?, David, 04/10/2022
+N°7, Can the device function while being underpowered?, David, 04/10/2022
+N°8, Can the device function while being overpowered?, David, 04/10/2022
+N°9, Does the Lora antenna work?, David, 04/10/2022
+N°10, Does the device function even if the current is cut?, David, 04/10/2022
+N°11, What would happen if the device lost internet conection?, David, 04/10/2022
+N°12, Does the Lora module work?, David, 4/10/2022
+N°13, What happens if the user is not in Lora's Range?, David, 4/10/2022
+N°14, What would happen if there was a short circuit?, David, 4/10/2022
+N°15, What would happen if the battery was overheated?, David, 4/10/2022
+N°16, What would happen if there was a breach in our information?, David, 4/10/2022
