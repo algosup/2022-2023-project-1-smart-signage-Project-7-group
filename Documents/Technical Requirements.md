@@ -48,15 +48,16 @@ The product is a hardware module. It will plug into existing LED cables of signa
 
 ## b. Glossary of Terminology
 
-| Name                             | Full name                                         | Definition                                                                          |
-| -------------------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| LED                              | Light-Emitting Diode                              | An electrical component that produces light when powered.                           |
-| LoRa                             | Long-Range                                        | A type of radio transmission.                                                       |
-| LoRaWAN                          | Long-Range Wide Area Network                      | A protocol to talk over LoRa.                                                       |
-| MOSFET                           | Metal–Oxide–Semiconductor Field-Effect Transistor | A type of relay (switch). It allows the control of signals with different voltages. |
-| Protocol                         |                                                   | A defined method of communication between two entities (often electronic devices).  |
-| Sign <br> Signage <br> Signboard |                                                   | A painted board used for advertising. In our case, they are lit up with LEDs.       |
-| Signall                          |                                                   | A French company manufacturing signs.                                               |
+| Name                             | Full name                                         | Definition                                                                                                          |
+| -------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Breadboard                       |                                                   | A piece of plastic latticed with holes interconnected by metal bars, perfect for easy and fast circuit prototyping. |
+| LED                              | Light-Emitting Diode                              | An electrical component that produces light when powered.                                                           |
+| LoRa                             | Long-Range                                        | A type of radio transmission.                                                                                       |
+| LoRaWAN                          | Long-Range Wide Area Network                      | A protocol to talk over LoRa.                                                                                       |
+| MOSFET                           | Metal–Oxide–Semiconductor Field-Effect Transistor | A type of relay (switch). It allows the control of signals with different voltages.                                 |
+| Protocol                         |                                                   | A defined method of communication between two entities (often electronic devices).                                  |
+| Sign <br> Signage <br> Signboard |                                                   | A painted board used for advertising. In our case, they are lit up with LEDs.                                       |
+| Signall                          |                                                   | A French company manufacturing signs.                                                                               |
 
 ## c. Context
 
@@ -74,6 +75,7 @@ The hardware will read different physical values including:
   - Detect adaptor failure
   - Detect LED damage
 - Sunlight level
+- Detect passerby
 
 It will also interact and be able to control the dimming of the LEDs.
 
@@ -96,25 +98,35 @@ An interface to control the devices is planned as a future project but is not fo
 
 We will use the [LoRa-E5 Dev Board](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) as it allows for an easy and cheap wireless communication method. The board can run on the same battery for many years meaning less maintenance.
 
-Our device will include a current transformer to detect the 240V before the adaptor, a current sensor to detect the 12V after the adaptor as well as a photoresistor(s) to detect the ambient light level and/or the level emitted by the LEDs.
+Our device will include a current transformer to detect the 240V before the adaptor, a current sensor to detect the 12V after the adaptor.
+There will also be a photoresistor(s) to detect the ambient light level and/or the level emitted by the LEDs and a motion sensor to detect human presence.
 Moreover, there will be a [MOSFET](https://en.wikipedia.org/wiki/MOSFET) to control the dimming of the LEDs.
+
+On the programming side, the LoRa-E5 Dev Board will only be used to transmit messages. It will be controlled externally by an [STM32F103C8T6 (Bluepill)](https://stm32-base.org/boards/STM32F103C8T6-Blue-Pill.html) as it allows for easier debugging on a breadboard.
+For the final product, the client may directly program the LoRa chip by using an ST-Link device to remove the Bluepill, saving time and money.
 
 As the number of bytes that can be transmitted via LoRa is very limited, the following codes will be used to signal different messages:
 
-| Name                  | Direction | Message                          | Description                                                                                                                                                                                                                                       |
-| --------------------- | --------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| OK (NORMAL)           | Send      | 0x00, brightness, luminosity[^2] | Working normally.                                                                                                                                                                                                                                 |
-| OK (MANUAL)           | Send      | 0x01, brightness, luminosity[^2] | Working normally, manual mode.                                                                                                                                                                                                                    |
-| Power failure         | Send      | 0x02, downtime start             | Failure from the powergrid (blackout). `downtime start` is a Unix timestamp.                                                                                                                                                                      |
-| LED failure           | Send      | 0x03, downtime start             | Failure from the LEDs/circuit. `downtime start` is a Unix timestamp.                                                                                                                                                                              |
-| Internal error        | Send      | 0x04, error code                 | An error occured internally in the program.                                                                                                                                                                                                       |
-| Time desync[^1]       | Send      | 0x05, time, luminosity[^2]       | The device detected that its internal clock varies differently from its luminosity reading. The readings must differ over at least three full days.                                                                                               |
-| OK                    | Receive   | 0x00                             | Work normally.                                                                                                                                                                                                                                    |
-| Manual                | Receive   | 0x01, brightness[^2]             | Switch to manual mode: keep the provided brightness until further notice.                                                                                                                                                                         |
-| Automatic             | Receive   | 0x02                             | Switch to automatic mode: set the brightness based on the schedule.                                                                                                                                                                               |
-| Set brightness factor | Receive   | 0x03, factor                     | Set the global brightness factor without changing the entire schedule. `factor` is a percentage integer from 0% to 200%.                                                                                                                          |
-| Set time              | Receive   | 0x04, time                       | Set the time of the internal clock. `time` is a Unix timestamp.                                                                                                                                                                                   |
-| Set schedule[^1]      | Receive   | 0x05, start, end, brightness[^2] | Change the scheduled brightness on the given period. Times are in the form `0b00DDDHHHHHMMMMM` with day in range `[0-8]`, hours in range `[0-23]` and minutes in range `[0-59]`. Monday is represented by `0`, Sunday by `6` and everyday by `7`. |
+##### Upstream (Device to server)
+| Name            | Message                          | Description                                                                                                                                         |
+| --------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OK (NORMAL)     | 0x00, brightness, luminosity[^2] | Working normally.                                                                                                                                   |
+| OK (MANUAL)     | 0x01, brightness, luminosity[^2] | Working normally, manual mode.                                                                                                                      |
+| Power failure   | 0x02, downtime start             | Failure from the powergrid (blackout). `downtime start` is a Unix timestamp.                                                                        |
+| LED failure     | 0x03, downtime start             | Failure from the LEDs/circuit. `downtime start` is a Unix timestamp.                                                                                |
+| Internal error  | 0x04, error code                 | An error occured internally in the program.                                                                                                         |
+| Time desync[^1] | 0x05, time, luminosity[^2]       | The device detected that its internal clock varies differently from its luminosity reading. The readings must differ over at least three full days. |
+
+##### Downstream (Server to device)
+
+| Name                  | Message                          | Description                                                                                                                                                                                                                                       |
+| --------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OK                    | 0x00                             | Work normally.                                                                                                                                                                                                                                    |
+| Manual                | 0x01, brightness[^2]             | Switch to manual mode: keep the provided brightness until further notice.                                                                                                                                                                         |
+| Automatic             | 0x02                             | Switch to automatic mode: set the brightness based on the schedule.                                                                                                                                                                               |
+| Set brightness factor | 0x03, factor                     | Set the global brightness factor without changing the entire schedule. `factor` is a percentage integer from 0% to 200%.                                                                                                                          |
+| Set time              | 0x04, time                       | Set the time of the internal clock. `time` is a Unix timestamp.                                                                                                                                                                                   |
+| Set schedule[^1]      | 0x05, start, end, brightness[^2] | Change the scheduled brightness on the given period. Times are in the form `0b00DDDHHHHHMMMMM` with day in range `[0-8]`, hours in range `[0-23]` and minutes in range `[0-59]`. Monday is represented by `0`, Sunday by `6` and everyday by `7`. |
 
 [^1]: Might be removed later if the client deems it to be unnecessary.
 
@@ -167,8 +179,7 @@ On the matter of tests, testing real material is quite difficult and might not b
 
 ## b. Milestones
 
-<!--TODO-->
-*To be completed*
+Except for the final product with the respective documents, no deliverables are expected for this project.
 
 
 
@@ -176,6 +187,7 @@ On the matter of tests, testing real material is quite difficult and might not b
 ## a. References
 
 [LoRaWAN security](https://lora-alliance.org/resource_hub/lorawan-is-secure-but-implementation-matters/)
+<!--TODO-->
 
 ## b. Acknowledgments
 
