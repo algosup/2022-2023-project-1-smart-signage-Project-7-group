@@ -8,13 +8,11 @@ For this project, the following hardware is required:
 
 The components are wired in this manner:
 
-<!--TODO-->
-    Component wiring here
+<!-- TODO: Component wiring image -->
 
 The connections from the computer to the LoRa board will be done this way:
 
-<!--TODO-->
-    Boards wiring here
+<!-- TODO: Board wiring image -->
 
 # Software
 
@@ -35,12 +33,30 @@ OpenOCD:
 `BINARY_PATH` is the path of the final binary file. Must be a `.bin` file.
 `MODULE_PATH` is the name you gave your go module with `go mod init`
 
+#### Building
+
 In the root of your project directory, execute this command:
 `tinygo build -target bluepill -o OUTPUT_PATH MODULE_PATH`
 
+#### Flashing
+
+On the Bluepill chip, set the `BOOT0` jumper to 1 and make sure the `BOOT1` is on 0.
+![](Images/jumpers_1.png)
+
 Open STM32CubeProgrammer.
-Connect to the device in UART mode.
+Select the correct port and connect to the device in UART mode.
 In the "Memory & File editing" tab, select "Open file".
-Locate and open `BINARY_PATH`.
+Locate and open the binary file generated earlier at `BINARY_PATH`.
 Click the "Download" button.
-<!-- TODO: Insert SMT32 screengrab here. -->
+Finally, disconnect from the device.
+<!-- TODO: Edit SMT32 screengrabs to show the buttons to click -->
+![](./Images/cubeprog_A.png)
+![](./Images/cubeprog_B.png)
+
+#### Usage
+
+If necessary, open a serial interface and connect it to the board.
+
+Put the `BOOT0` jumper back to 0.
+Start the program by pressing the `RESET` button on the board.
+![](Images/jumpers_0.png)
