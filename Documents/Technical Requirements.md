@@ -2,11 +2,11 @@
 
 Project: Smart signage
 Client: [Signall](https://signall.com/)
-Author: [Léo CHARTIER](https://www.linkedin.com/in/l%C3%A9o-chartier/)
+Author: Léo CHARTIER
 Team:
 - [Maxime PAGES](https://linkedin.com/in/maxime-pages-551784221) (Project manager)
-- [Mathis KAKAL]() (Program manager)
-- Léo CHARTIER (Technical lead)
+- [Mathis KAKAL](https://www.linkedin.com/in/mathis-k-a239ba10a/) (Program manager)
+- [Léo CHARTIER](https://www.linkedin.com/in/l%C3%A9o-chartier/) (Technical lead)
 - [Eloi PRIOL](https://linkedin.com/in/eloi-priol-62511b1b8/) (Software engineer)
 - [David CUAHONTE-CUEVAS](https://linkedin.com/in/david-cuahonte-527781221/) (Quality insurance)
 
@@ -98,7 +98,7 @@ An interface to control the devices is planned as a future project but is not fo
 
 We will use the [LoRa-E5 Dev Board](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) as it allows for an easy and cheap wireless communication method. The board can run on the same battery for many years meaning less maintenance.
 
-Our device will include a current transformer to detect the 240V before the adaptor, a current sensor to detect the 12V after the adaptor.
+Our device will include a current transformer to detect the 240V before the adaptor, and a current sensor to detect the 12V after the adaptor.
 There will also be a photoresistor(s) to detect the ambient light level and/or the level emitted by the LEDs and a motion sensor to detect human presence.
 Moreover, there will be a [MOSFET](https://en.wikipedia.org/wiki/MOSFET) to control the dimming of the LEDs.
 
