@@ -24,15 +24,15 @@ If you do not have a breadboard you can simply do it like this:
 
 The software is written in GO.
 The compilation will be done with [TinyGo](https://tinygo.org/) and [OpenOCD](https://openocd.org/).
-The flashing of the microchip will be done with [SMT32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html)
+The flashing of the microchip will be done with [stm32flash](https://sourceforge.net/p/stm32flash/wiki/Home/)
 
 ## Software installation
 
 - [TinyGo](https://tinygo.org/getting-started/install/)
-OpenOCD:
+- OpenOCD:
   - [Manually](https://sourceforge.net/projects/openocd/files/latest/download)
   - Via homebrew: `brew install open-ocd`
-- [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html#get-software)
+- [stm32flash](https://sourceforge.net/projects/stm32flash/files/latest/download)
 
 Optional:
 - [Arduino](https://www.arduino.cc/en/software)
@@ -52,6 +52,21 @@ If you wish to use the Arduino IDE to monitor serial connections, you will have 
 
 # Building and flashing
 
+<details>
+<summary>Automatically</summary>
+
+The automated script for Windows has yet to be done. Please follow the manual instructions.
+
+On the Bluepill chip, set the `BOOT0` jumper to 1 and make sure the `BOOT1` is on 0.
+![](Images/jumpers_1.png)
+
+Copy the `flash.sh` file from the root folder to your project folder. Run it from a command prompt in this directory.
+
+</details>
+
+<details>
+<summary>Manually</summary>
+
 `BINARY_PATH` is the path of the final binary file. Must be a `.bin` file (`Documents/flash.bin` for example).
 `MODULE_PATH` is the name you gave your go module when using `go mod init` (`example/flash` for example).
 
@@ -67,18 +82,13 @@ On the Bluepill chip, set the `BOOT0` jumper to 1 and make sure the `BOOT1` is o
 
 If your device is connected to a serial monitor, disconnect it.
 
-Open STM32CubeProgrammer.
-Select the correct port and connect to the device in UART mode.
-In the "Memory & File editing" tab, select "Open file".
-Locate and open the binary file generated earlier at `BINARY_PATH`.
-Click the "Download" button.
-Finally, disconnect from the device.
-<!-- TODO: Edit SMT32 screengrabs to show the buttons to click -->
-![](./Images/cubeprog_A.png)
-![](./Images/cubeprog_B.png)
-![](./Images/cubeprog_C.png)
+Get the port to your device. This can be done on Unix devices by running `ls /dev/tty.usb*`.
 
-#### Usage
+Run the flash command: `stm32flash -w build.bin -v PORT`. `PORT` is the port of the device you got above.
+
+</details>
+
+# Usage
 
 If necessary, open a serial interface (such as the Arduino IDE) and connect it to the board.
 
