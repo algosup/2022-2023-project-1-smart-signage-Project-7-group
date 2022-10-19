@@ -37,6 +37,21 @@ The flashing of the microchip will be done with [stm32flash](https://sourceforge
 Optional:
 - [Arduino](https://www.arduino.cc/en/software)
 
+## VSCode integration
+
+VSCode has a TinyGo extension you can install.
+
+If necessary, you will have to fix your settings by following the [setup instructions](https://tinygo.org/docs/guides/ide-integration/).
+The result will look something like this:
+```json
+    "go.toolsEnvVars": {
+        "GOOS": "linux",
+        "GOARCH": "arm",
+        "GOROOT": "/Users/me/Library/Caches/tinygo/goroot-0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+        "GOFLAGS": "-tags=cortexm,baremetal,linux,arm,bluepill,stm32f103,stm32f1,stm32,tinygo,math_big_pure_go,gc.conservative,scheduler.tasks,serial.uart"
+    }
+```
+
 ## Arduino board
 
 If you wish to use the Arduino IDE to monitor serial connections, you will have to follow these steps to be able to connect to the software.
@@ -52,13 +67,13 @@ If you wish to use the Arduino IDE to monitor serial connections, you will have 
 
 # Building and flashing
 
+On the Bluepill chip, set the `BOOT0` jumper to 1 and make sure the `BOOT1` is on 0.
+![](Images/jumpers_1.png)
+
 <details>
 <summary>Automatically</summary>
 
 The automated script for Windows has yet to be done. Please follow the manual instructions.
-
-On the Bluepill chip, set the `BOOT0` jumper to 1 and make sure the `BOOT1` is on 0.
-![](Images/jumpers_1.png)
 
 Copy the `flash.sh` file from the root folder to your project folder. Run it from a command prompt in this directory.
 
@@ -76,9 +91,6 @@ In the root of your project directory, execute this command:
 `tinygo build -target bluepill -o OUTPUT_PATH MODULE_PATH`
 
 #### Flashing
-
-On the Bluepill chip, set the `BOOT0` jumper to 1 and make sure the `BOOT1` is on 0.
-![](Images/jumpers_1.png)
 
 If your device is connected to a serial monitor, disconnect it.
 
