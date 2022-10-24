@@ -1,7 +1,7 @@
 <h1 style="text-align:center">Technical specifications</h1>
 
 Project: Smart signage
-Client: [Signall](https://signall.com/)
+Client: [SignAll](https://signall.com/)
 Author: Léo CHARTIER
 Team:
 - [Maxime PAGES](https://linkedin.com/in/maxime-pages-551784221) (Project manager)
@@ -51,55 +51,65 @@ The product is a hardware module. It will plug into existing LED cables of signa
 | Name                             | Full name                                         | Definition                                                                                                          |
 | -------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | Breadboard                       |                                                   | A piece of plastic latticed with holes interconnected by metal bars, perfect for easy and fast circuit prototyping. |
+| Device                           |                                                   | AppSolu solution, developped by Algosup                                                                             |
 | LED                              | Light-Emitting Diode                              | An electrical component that produces light when powered.                                                           |
 | LoRa                             | Long-Range                                        | A type of radio transmission.                                                                                       |
 | LoRaWAN                          | Long-Range Wide Area Network                      | A protocol to talk over LoRa.                                                                                       |
 | MOSFET                           | Metal–Oxide–Semiconductor Field-Effect Transistor | A type of relay (switch). It allows the control of signals with different voltages.                                 |
+| PCB                              | Printed Circuit Board                             | Small plaque on which resides microprocessors and other components.                                                 |
+| Product                          |                                                   | A product from SignAll                                                                                              |
 | Protocol                         |                                                   | A defined method of communication between two entities (often electronic devices).                                  |
 | Sign <br> Signage <br> Signboard |                                                   | A painted board used for advertising. In our case, they are lit up with LEDs.                                       |
-| Signall                          |                                                   | A French company manufacturing signs.                                                                               |
+| SignAll                          |                                                   | A French company manufacturing signs, our client.                                                                   |
 
 ## c. Context
 
-This project is a request from the French company [Signall](https://signall.com/).
-Signall makes signboards for different companies all around France, from the design to the production and the installation.
+This project is a request from the French company [SignAll](https://signall.com/).
+SignAll makes signboards for different companies all around France, from the design to the production, the installation, and sometimes the maintenance.
 
-Like many signboards, those are illuminated. But with the cost and delay of sending a technician to check and repair them, as well as the environmental and social mindset changes with light pollution, the company approached us to create a solution.
+Many of those products are illuminated. But with the cost and delay of sending a technician to check and repair them, as well as the environmental and social mindset changes with light pollution, the company approached us to create a solution.
 
 ## d. Goal
 
-The objective of this project is to build a piece of hardware, that will remotely communicate with the client.
+The objective of this project is to build a device, that will detect preventively possible failures and warn the user.
+Its usage for the client relates more to a Trojan horse device to have the users buy products from the client.
 
-The hardware will read different physical values including:
+The device may be installed on existing products, that are not necessarily from SignAll.
+
+The device must also be able to control up to ??? products at a time. <!--TODO-->
+Some of these products work simultaneously (a sign might have to be split into smaller parts) and the device must consider that.
+
+The device will read different physical values including:
 - Power usage
   - Detect adaptor failure
   - Detect LED damage
 - Sunlight level
-- Detect passerby
+- ~~Detect passerby~~ *(Removed because too complicated)*
 
 It will also interact and be able to control the dimming of the LEDs.
 
 ## e. Out of Scope
 
-The signs themselves are separate from the devices. It is Signall's goal to worry about it. Our device will only have very little control over those.
+The products themselves are separate from the devices. It is SignAll's goal to worry about it. Our device will only have very little control over those.
 
 The company will also rely on existing relais and systems for communication with the device.
 
-It is also impossible to change the control of the brightness instantly on command. Potential changes will occur at midnight.
-(Note: this limit might be changed depending on feasibility; requires further testing) <!--TODO-->
+Wit the selected solution, it is impossible to change the control of the brightness instantly on command. Potential changes will occur when the device pings the server.
 
 ## f. Future Goals
 
 An interface to control the devices is planned as a future project but is not for us to do. Although, if time allows it, a mockup can be created.
 
+The device will also have to be reduced to a single, scalable, and cheap PCB for production.
+
 
 
 # 2. Approach
 
-We will use the [LoRa-E5 Dev Board](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) as it allows for an easy and cheap wireless communication method. The board can run on the same battery for many years meaning less maintenance.
+We will use the [LoRa-E5 Dev Board](https://www.seeedstudio.com/LoRa-E5-Dev-Kit-p-4868.html) as it allows for an easy and cheap wireless communication method. The board can run on the same battery for many years meaning less maintenance. 
 
-Our device will include a current transformer to detect the 240V before the adaptor, and a current sensor to detect the 12V after the adaptor.
-There will also be a photoresistor(s) to detect the ambient light level and/or the level emitted by the LEDs and a motion sensor to detect human presence.
+Our device will include a current transformer to detect the 240V before the adaptor, and a current sensor to detect the 12V after the adaptor for the products that run on 12V.
+There will also be a photoresistor(s) to detect the ambient light level and/or the level emitted by the LEDs ~~and a motion sensor to detect human presence~~.
 Moreover, there will be a [MOSFET](https://en.wikipedia.org/wiki/MOSFET) to control the dimming of the LEDs.
 
 On the programming side, the LoRa-E5 Dev Board will only be used to transmit messages. It will be controlled externally by an [STM32F103C8T6 (Bluepill)](https://stm32-base.org/boards/STM32F103C8T6-Blue-Pill.html) as it allows for easier debugging on a breadboard.
@@ -126,7 +136,8 @@ As the number of bytes that can be transmitted via LoRa is very limited, the fol
 | Automatic             | 0x02                             | Switch to automatic mode: set the brightness based on the schedule.                                                                                                                                                                               |
 | Set brightness factor | 0x03, factor                     | Set the global brightness factor without changing the entire schedule. `factor` is a percentage integer from 0% to 200%.                                                                                                                          |
 | Set time              | 0x04, time                       | Set the time of the internal clock. `time` is a Unix timestamp.                                                                                                                                                                                   |
-| Set schedule[^1]      | 0x05, start, end, brightness[^2] | Change the scheduled brightness on the given period. Times are in the form `0b00DDDHHHHHMMMMM` with day in range `[0-8]`, hours in range `[0-23]` and minutes in range `[0-59]`. Monday is represented by `0`, Sunday by `6` and everyday by `7`. |
+| Set schedule[^1]      | 0x05, start, end, brightness[^2] | Change the scheduled brightness on the given period. Times are in the form `0b0000DDDHHHHHMMM` with day in range `[0-8]`, hours in range `[0-23]` and minutes in range `[0-59]`. Monday is represented by `0`, Sunday by `6` and everyday by `7`. |
+| Set group             | 0x0§, sign + group               | Add a sign to a group so they are controlled simultaneously. The value is in the form `0xSSSSGGGG` with `S` the sign ID and `G` the group ID, both in the range `[0-15]`.                                                                         |
 
 [^1]: Might be removed later if the client deems it to be unnecessary.
 
@@ -153,7 +164,7 @@ We will stay in contact with the client and the users to make sure there is no p
 
 Moreover, we will survey the client and users to know what they think and what we could improve.
 
-On the matter of tests, testing real material is quite difficult and might not be feasible. <!--TODO-->
+On the matter of tests, testing real material is quite difficult and might not be feasible. We will have to wait for feedback from the users.
 
 
 
@@ -170,7 +181,7 @@ On the matter of tests, testing real material is quite difficult and might not b
   - Cables wired correctly
   - Fully able to read and write to the correct pins
 
-- Week 4: Working software MVP
+- Week 5: Working software MVP
 
 - Week 6: Finished project
   - Protection case for the demo
@@ -179,7 +190,7 @@ On the matter of tests, testing real material is quite difficult and might not b
 
 ## b. Milestones
 
-Except for the final product with the respective documents, no deliverables are expected for this project.
+Except for the final device with the respective documents, no deliverables are expected for this project.
 
 
 
