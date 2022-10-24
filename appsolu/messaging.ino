@@ -1,9 +1,7 @@
-#define PIN A0
+#include <math.h>
 
 HardwareSerial DEBUG(A3, A2); // Debug: connection with computer
-const long PERIOD = 30000; // 30 sec
 
-long nextUpdate;
 
 long getNextUpdate(long now, long period) {
   long x = now / period;
@@ -16,7 +14,7 @@ long getNextUpdate(long now, long period) {
 
 // TODO: Implement correctly
 char* generateMessage() {
-  return NULL;
+  return nullptr;
 }
 
 void processMessage(String message) {
