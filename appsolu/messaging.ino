@@ -1,27 +1,8 @@
-#include <math.h>
-
-HardwareSerial DEBUG(A3, A2); // Debug: connection with computer
-
-
-long getNextUpdate(long now, long period) {
-  long x = now / period;
-  long n = roundl(x) + 1;
-  long newUpdate = n * period;
-  return newUpdate;
+void connectLora() {
+  Serial.println("AT+JOIN");
+  delay(5000);
+  Serial.flush();
 }
-
-
-
-// TODO: Implement correctly
-char* generateMessage() {
-  return nullptr;
-}
-
-void processMessage(String message) {
-  DEBUG.print(message);
-}
-
-
 
 void sendHexMessage(char message[]) {
   Serial.print("AT+MSGHEX=\"");
