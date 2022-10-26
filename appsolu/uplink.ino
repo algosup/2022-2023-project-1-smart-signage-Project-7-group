@@ -21,14 +21,13 @@ char* generateMessage() {
     Serial.print(" ");
     Serial.println((int)error.value);
 
-    char message[] {
-      error.type,
-      error.time >> 24,
-      error.time >> 16,
-      error.time >> 8,
-      error.time,
-      error.value,
-    };
+    char *message = (char*) malloc(sizeof(char));
+    message[0] = error.type;
+    message[1] = (char) (error.time >> 24);
+    message[2] = (char) ((error.time >> 16)%256);
+    message[3] = (char) ((error.time >> 8)%256);
+    message[4] = (char) (error.time%256);
+    message[5] = error.value;
     return message;
   }
 

@@ -24,6 +24,7 @@ void setup(){
   }
   Serial.println();
   Serial.println("=====");
+  free(message); // IMPORTANT
 }
 
 void loop(){
