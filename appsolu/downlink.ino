@@ -34,7 +34,7 @@ void interpretdownlink(String message)
       change_period(daymask,hour,minute*10,endhour,endminute*10,brightness);
       break;
     }
-    case '6': break;
+    case '6': break; //TODO: Groups
     default: break;
  }
 }

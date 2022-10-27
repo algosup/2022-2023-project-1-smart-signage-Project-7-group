@@ -1,31 +1,36 @@
 #include "appsolu.h"
 
-// HardwareSerial DEBUG(A3, A2); // Debug: connection with computer
+#define Debug Serial
+HardwareSerial Lora(A3, A2);
 
 void setup(){
   delay(5000);
 
   initschedule();
-  long testTimestamp = 1666666666;
-
-  error.type = INTERNAL;
-  error.time = testTimestamp;
-  error.value = 0x01;
+  error.type = NONE;
   
-  Serial.begin(9600);
-  while (!Serial) {}
+  Debug.begin(9600);
+  while (!Debug) {}
+  Lora.begin(9600);
+  while (!Lora) {}
 
   connectLora();
-  char* message = generateMessage();
-  for (int i=0; i<6; i++) {
-    char c = message[i];
-    Serial.print((int)c);
-    Serial.print(" ");
-  }
-  Serial.println();
-  Serial.println("=====");
-  free(message); // IMPORTANT
+
+  Debug.println("start");
 }
 
 void loop(){
+  unsigned long now = getTime();
+  Date* date = timeToDate(now);
+  
+  getError();
+  int brightness = get_schedule_value(date);
+  int ambientLight = getPhotoresistor();
+  setIntensity(brightness, ambientLight);
+  
+  if (now >= nextUplinkTime) {
+    nextUplinkTime = getNextUplink(now, MESSAGING_PERIOD);
+    char* message = generateMessage();
+    sendHexMessage(message);
+  }  
 }

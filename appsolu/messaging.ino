@@ -1,26 +1,42 @@
 void connectLora() {
-  Serial.println("AT+JOIN");
-  delay(5000);
-  Serial.flush();
+  Lora.println("AT+JOIN");
+  // receiveMessage(); // +JOIN: Start
+  // receiveMessage(); // +JOIN: NORMAL
+  // String message = reiceiveMessage();
+  // if ()
+
+  // TODO: Finish above code to parse incomming messages and remove below code
+  delay(10000);
+  flush();
 }
 
-void sendHexMessage(char message[]) {
-  Serial.print("AT+MSGHEX=\"");
-  int length = sizeof(message)/sizeof(message[0]);
-  for (int i = 0; i < length; i++) {
+void sendHexMessage(char* message) {
+  Lora.print("AT+MSGHEX=\"");
+  int size = message[0];
+  for (int i = 1; i < size+1; i++) {
     int v = message[i];
     int d = v / 16;
-    Serial.write('0'+d);
+    Lora.write('0'+d);
     int u = v % 16;
-    Serial.write('0'+u);
+    Lora.write('0'+u);
   }
-  Serial.println("\"");
+  Lora.println("\"");
+  free(message);
 }
 
 String receiveMessage() {
-  if (Serial.available() == 0) return "";
-  String message = Serial.readStringUntil('\n');
+  String message = "";
+  while (true) {
+    while (Lora.available() == 0) {}
+    char c = Lora.read();
+    if (c == '\n') break;
+    message += c;
+  }
   if (message[message.length()-1] != '\r') return ""; // Not CR+NL ending
   message[message.length()-1] = '\n';
   return message;
+}
+
+void flush() {
+  while (Lora.available() > 0) Lora.read();
 }

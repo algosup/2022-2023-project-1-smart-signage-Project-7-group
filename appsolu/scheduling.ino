@@ -37,7 +37,7 @@ void change_period(bool daymask [8], char hour, char minute,char hourend,char mi
     }    
 }
 
-char get_value(char day, char hour, char minute)
+char get_schedule_value(Date* date)
 {
-    return SCHEDULE[day][char(hour*6 + floor(minute/10))];
+    return SCHEDULE[date->day][char(date->hours*6 + floor(date->minutes/10))];
 }
