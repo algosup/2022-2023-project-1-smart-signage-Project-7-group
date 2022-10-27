@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>AppSolu Interface</title>
+
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="stylesheet" href="css/bootstrap1.min.css" />
+    <link rel="stylesheet" href="css/metisMenu.css">
+    <link rel="stylesheet" href="css/style1.css" />
+
+    
+</head>
+
+<body class="crm_body_bg">
+
+    <!-- SIDEBAR NAV -->
+
+    <nav class="sidebar">
+        <div class="logo d-flex justify-content-between">
+            <a href="index.html"><img src="img/logo.png" alt=""></a>
+            <div class="sidebar_close_icon d-lg-none">
+                <i class="ti-close"></i>
+            </div>
+        </div>
+        <ul id="sidebar_menu">
+            <li class="side_menu_title">
+                <span>Groupes de Produits</span>
+            </li>
+            <li class="mm-active">
+                <a class="has-arrow" href="#" aria-expanded="false">
+                    <img src="img/menu-icon/1.svg" alt="">
+                    <span>Groupe #1</span>
+                </a>
+            </li>
+            <li class="mm-inacive">
+                <a class="has-arrow" href="#" aria-expanded="false">
+                    <img src="img/menu-icon/1.svg" alt="">
+                    <span>Groupe #2</span>
+                </a>
+            </li>
+            
+            </li>
+        </ul>
+            
+    </nav>
+
+    <!-- MAIN CONTENT -->
+
+    <section class="main_content dashboard_part">
+        <div class="container-fluid g-0">
+            <div class="row">
+                <div class="col-lg-12 p-0">
+                    <div class="header_iner d-flex justify-content-between align-items-center">
+                        <div class="sidebar_icon d-lg-none">
+                            <i class="ti-menu"></i>
+                        </div>
+                        <div class="serach_field-area">
+                            <!-- OLD SEARCH -->
+
+                            <!-- <div class="search_inner">
+                            </div> -->
+                        </div>
+                        <div class="header_right d-flex justify-content-between align-items-center">
+                            <div class="header_notification_warp d-flex align-items-center">
+                                <li>
+                                    <a href="#"> <img src="img/icon/bell.svg" alt=""> </a>
+                                </li>
+                                <li>
+                                    <a href="#"> <img src="img/icon/msg.svg" alt=""> </a>
+                                </li>
+                            </div>
+                            <div class="profile_info">
+                                <img src="img/client_img.png" alt="#">
+                                <div class="profile_info_iner">
+                                    <h5>Banque Populaire</h5>
+                                    <div class="profile_info_details">
+                                        <a href="#">Mon Profil</a>
+                                        <a href="#">Paramètres</a>
+                                        <a href="#">Se déconnecter</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main_content_iner ">
+            <div class="container-fluid p-0">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="single_element">
+                            <div class="quick_activity">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="quick_activity_wrap">
+                                            <div class="single_quick_activity d-flex">
+                                                <div class="icon">
+                                                    <img src="img/light-bulb-check.svg" alt="">
+                                                </div>
+                                                <div class="count_content">
+                                                    <h3><span class="counter">10</span> </h3>
+                                                    <p>Produits détéctées</p>
+                                                </div>
+                                            </div>
+                                            <div class="single_quick_activity d-flex">
+                                                <div class="icon">
+                                                    <img src="img/light-bulb-svg.svg" alt="">
+                                                </div>
+                                                <div class="count_content">
+                                                    <h3><span class="counter">8</span> </h3>
+                                                    <p>Produits allumés</p>
+                                                </div>
+                                            </div>
+                                            <div class="single_quick_activity d-flex">
+                                                <div class="icon">
+                                                    <img src="img/light-bulb-cross-svg.svg" alt="">
+                                                </div>
+                                                <div class="count_content">
+                                                    <h3><span class="counter">1</span> </h3>
+                                                    <p>Produit&#40s&#41 déféctueux</p>
+                                                </div>
+                                            </div>
+                                            <div class="single_quick_activity d-flex">
+                                                <div class="icon">
+                                                    <img src="img/error.png" alt="">
+                                                </div>
+                                                <div class="count_content">
+                                                    <h3><span class="counter">2</span> </h3>
+                                                    <p>Erreur&#40s&#41 au cours du dernier mois</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-7"> 
+                        <div class="white_box card_height_30">
+                            <div class="slider ">
+                                <input type="range" min="0" max="255" value="0" oninput="rangeValue.innerText = this.value">
+                                <p id="rangeValue">0</p>
+                            </div>
+                        </div>
+                        <div class="white_box QA_section card_height_100">
+                            <div class="white_box_tittle list_header m-0 align-items-center">
+                                <div class="main-title mb-sm-15">
+                                    <h3 class="m-0 nowrap">Produits du Groupe 1</h3>
+                                </div>
+                            </div>
+                            <div class="QA_table ">
+                                <table class="table lms_table_active2">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Type d'événement</th>
+                                            <th scope="col">Produit Concerné</th>
+                                            <th scope="col">Date/Heure</th>
+                                            <th scope="col">Serial Number</th>
+                                            <th scope="col">Statut</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="patient_thumb d-flex align-items-center">
+                                                    <p>Allumage</p>
+                                                </div>
+                                            </th>
+                                            <td>Led #1 Façade</td>
+                                            <td>11/03/2020</td>
+                                            <td>MDC65454</td>
+                                            <td>
+                                                <div class="amoutn_action d-flex align-items-center">
+                                                    OK
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="patient_thumb d-flex align-items-center">   
+                                                    <p>Allumage</p>
+                                                </div>
+                                            </th>
+                                            <td>Led #2 Façade</td>
+                                            <td>11/03/2020</td>
+                                            <td>MDC65454</td>
+                                            <td>
+                                                <div class="amoutn_action d-flex align-items-center">
+                                                    OK
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="patient_thumb d-flex align-items-center">
+                                                    <p>Allumage</p>
+                                                </div>
+                                            </th>
+                                            <td>Led #3 Façade</td>
+                                            <td>11/03/2020</td>
+                                            <td>MDC65454</td>
+                                            <td>
+                                                <div class="amoutn_action d-flex align-items-center">
+                                                    OK
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 ">
+                        <div class="white_box card_height_15 mb_30">
+                            <div class="white_box card_height_100">
+                                <div class="box_header border_bottom_1px  ">
+                                    <div class="main-title">
+                                        <h3 class="mb_25">Journal d'événements</h3>
+                                    </div>
+                                </div>
+                                <div class="Activity_timeline">
+                                    <ul>
+                                        <li>
+                                            <div class="activity_bell"></div>
+                                            <div class="activity_wrap">
+                                                <h6>5 min ago</h6>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                                                    scelerisque</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="activity_bell"></div>
+                                            <div class="activity_wrap">
+                                                <h6>5 min ago</h6>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                                                    scelerisque</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="activity_bell"></div>
+                                            <div class="activity_wrap">
+                                                <h6>5 min ago</h6>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                                                    scelerisque</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="activity_bell"></div>
+                                            <div class="activity_wrap">
+                                                <h6>5 min ago</h6>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                                                    scelerisque</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        <div class="white_box card_height_20 mb_30">
+                            <div class="box_header border_bottom_1px  ">
+                                <div class="main-title">
+                                    <h3 class="mb_25">Incidents sur le dernier Mois</h3>
+                                </div>
+                            </div>
+                            <div id="chart-7"></div>
+                            <div class="row text-center mt-3">
+                                <div class="col-sm-6">
+                                    <h6 class="heading_6 d-block">Mois dernier</h6>
+                                    <p class="m-0">358</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h6 class="heading_6 d-block">Ce mois</h6>
+                                    <p class="m-0">194</p>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Test libraries -->
+
+    <script src="js/chart.min.js"></script>
+    <script src="js/jquery1-3.4.1.min.js"></script>
+    <script src="js/bootstrap1.min.js"></script>
+    <script src="js/metisMenu.js"></script>
+    
+    <script src="js/vendors/apex_chart/apexcharts.js"></script>
+    <script src="js/vendors/apex_chart/apex_chart_list.js"></script>
+
+    
+</body>
+
+</html>
