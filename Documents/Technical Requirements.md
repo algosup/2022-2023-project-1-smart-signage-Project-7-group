@@ -34,7 +34,6 @@ Team:
   - [b. Milestones](#b-milestones)
 - [6. End Matter](#6-end-matter)
   - [a. References](#a-references)
-  - [b. Acknowledgments](#b-acknowledgments)
 </details>
 
 
@@ -76,8 +75,8 @@ Its usage for the client relates more to a Trojan horse device to have the users
 
 The device may be installed on existing products, that are not necessarily from SignAll.
 
-The device must also be able to control up to ??? products at a time. <!--TODO-->
-Some of these products work simultaneously (a sign might have to be split into smaller parts) and the device must consider that.
+The device must also be able to control multiple products at a time. <!--TODO-->
+Some of these products work simultaneously (a sign might have to be split into smaller parts) and the device must consider that (turn all parts in a group off if one breaks).
 
 The device will read different physical values including:
 - Power usage
@@ -94,13 +93,17 @@ The products themselves are separate from the devices. It is SignAll's goal to w
 
 The company will also rely on existing relais and systems for communication with the device.
 
-Wit the selected solution, it is impossible to change the control of the brightness instantly on command. Potential changes will occur when the device pings the server.
+With the selected solution, it is impossible to change the control of the brightness instantly on command. Potential changes will occur when the device pings the server.
 
 ## f. Future Goals
 
 An interface to control the devices is planned as a future project but is not for us to do. Although, if time allows it, a mockup can be created.
 
-The device will also have to be reduced to a single, scalable, and cheap PCB for production.
+A key point to add is to have predicitve maintenance rather than just corrective maintenance.
+
+More features should be added such as the proximity sensor that has been removed from this version.
+
+Finally, the device will also have to be reduced to a single, scalable, and cheap PCB for production. An other communication method than Lora might be used instead like by using a SIM card to reduce the cost of the device and make communication faster and unlimited.
 
 
 
@@ -129,17 +132,17 @@ As the number of bytes that can be transmitted via LoRa is very limited, the fol
 
 ##### Downstream (Server to device)
 
-| Name                  | Message                          | Description                                                                                                                                                                                                                                       |
-| --------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| OK                    | 0x00                             | Work normally.                                                                                                                                                                                                                                    |
-| Manual                | 0x01, brightness[^2]             | Switch to manual mode: keep the provided brightness until further notice.                                                                                                                                                                         |
-| Automatic             | 0x02                             | Switch to automatic mode: set the brightness based on the schedule.                                                                                                                                                                               |
-| Set brightness factor | 0x03, factor                     | Set the global brightness factor without changing the entire schedule. `factor` is a percentage integer from 0% to 200%.                                                                                                                          |
-| Set time              | 0x04, time                       | Set the time of the internal clock. `time` is a Unix timestamp.                                                                                                                                                                                   |
-| Set schedule[^1]      | 0x05, start, end, brightness[^2] | Change the scheduled brightness on the given period. Times are in the form `0b0000DDDHHHHHMMM` with day in range `[0-8]`, hours in range `[0-23]` and minutes in range `[0-59]`. Monday is represented by `0`, Sunday by `6` and everyday by `7`. |
-| Set group             | 0x0§, sign + group               | Add a sign to a group so they are controlled simultaneously. The value is in the form `0xSSSSGGGG` with `S` the sign ID and `G` the group ID, both in the range `[0-15]`.                                                                         |
+| Name                  | Message                                | Description                                                                                                                                                                                                                                                                                     |
+| --------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| OK                    | 0x00                                   | Work normally.                                                                                                                                                                                                                                                                                  |
+| Manual                | 0x01, brightness[^2]                   | Switch to manual mode: keep the provided brightness until further notice.                                                                                                                                                                                                                       |
+| Automatic             | 0x02                                   | Switch to automatic mode: set the brightness based on the schedule.                                                                                                                                                                                                                             |
+| Set brightness factor | 0x03, factor                           | Set the global brightness factor without changing the entire schedule. `factor` is a percentage integer from 0% to 200%.                                                                                                                                                                        |
+| Set time              | 0x04, time                             | Set the time of the internal clock. `time` is a Unix timestamp.                                                                                                                                                                                                                                 |
+| Set schedule          | 0x05, days, start, end, brightness[^2] | Change the scheduled brightness on the given period. Times are in the form `0bHHHHHMMM` with hours in range `[0-23]` and minutes in range `[0-5]` for each tenths of minutes. The days are bits where a `1` mean the day is selected and a `0` is not. The LSB is Monday and the MSB is Sunday. |
+| Set group             | 0x06, sign + group                     | Add a sign to a group so they are controlled simultaneously. The value is in the form `0xSSSSGGGG` with `S` the sign ID and `G` the group ID, both in the range `[0-15]`.                                                                                                                       |
 
-[^1]: Might be removed later if the client deems it to be unnecessary.
+[^1]: Might be removed if the client deems it unecessary.
 
 [^2]: The brightness and luminosity values are integers from 0 to 255, where 0 is off/no light and 255 is maximal brightness.
 
@@ -198,9 +201,4 @@ Except for the final device with the respective documents, no deliverables are e
 ## a. References
 
 [LoRaWAN security](https://lora-alliance.org/resource_hub/lorawan-is-secure-but-implementation-matters/)
-<!--TODO-->
-
-## b. Acknowledgments
-
-<!--TODO-->
-*To be completed*
+<!--TODO: Add more references-->
