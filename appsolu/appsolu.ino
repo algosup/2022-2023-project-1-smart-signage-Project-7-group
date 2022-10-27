@@ -4,8 +4,6 @@
 HardwareSerial Lora(A3, A2);
 
 void setup(){
-  delay(5000);
-
   initschedule();
   error.type = NONE;
   
@@ -14,9 +12,10 @@ void setup(){
   Lora.begin(9600);
   while (!Lora) {}
 
+  Debug.println("Connecting...");
   connectLora();
 
-  Debug.println("start");
+  Debug.println("Ready!");
 }
 
 void loop(){

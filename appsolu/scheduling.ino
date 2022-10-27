@@ -1,5 +1,3 @@
-char SCHEDULE [7] [144];
-
 void initschedule()
 {
     int d,m;

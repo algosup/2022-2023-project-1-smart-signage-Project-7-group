@@ -16,5 +16,8 @@ int getPhotoresistor(){
 
 void setIntensity(int brightness, int ambientLight) {
   // TODO: LERP values + brightnessCurve
-  analogWrite(PWMPin, brightness*4);
+  int value = brightness*4;
+  // Debug.print("Set brightness to ");
+  // Debug.println(value);
+  analogWrite(PWMPin, value);
 }

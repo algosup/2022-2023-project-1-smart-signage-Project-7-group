@@ -56,5 +56,6 @@ struct Error error;
 long lastTimeOverflowCheck;
 unsigned long nextUplinkTime;
 unsigned long startTime; // Time at which the program started (unix timestamp) (time = millis() / 1000 + startTime)
+char SCHEDULE [7] [144];
 
 #endif

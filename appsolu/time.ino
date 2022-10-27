@@ -17,18 +17,22 @@ void correctTimeOverflow() {
 }
 
 Date* timeToDate(unsigned long time) {
-  int remain = time; // in seconds
-  char seconds = remain % 60;
+  unsigned long remain = time; // in seconds
+  int seconds = remain % 60;
 
   remain = (remain - seconds) / 60; // in minutes
-  char minutes = remain % 60;
+  int minutes = remain % 60;
 
   remain = (remain - minutes) / 24; // in hours
-  char hours = remain % 24;
+  int hours = remain % 24;
 
   remain = (remain - hours) / 7; // in days
-  char days = remain;
-
-  Date date = {days, hours, minutes, seconds};
-  return &date;
+  int day = remain % 7;
+  
+  Date* date = (Date*) malloc(sizeof(Date));
+  date->seconds = (char) seconds;
+  date->minutes = (char) minutes;
+  date->hours = (char) hours;
+  date->day = (char) day;
+  return date;
 }
