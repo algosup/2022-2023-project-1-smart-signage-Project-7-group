@@ -43,6 +43,7 @@ const unsigned long PERIOD = 3600; // 1 hour => 24msg/day
 
 
 char currentBrightness; // LED brightness in %
+char brightnessfactor = 1;
 State currentState = AUTOMATIC;
 struct Error error;
 long lastTimeOverflowCheck;
