@@ -16,6 +16,8 @@ Structure:
 
 -Comments
 
+-Status
+
 **First Test:**
 
 Do the LED’s Light up correctly?
@@ -27,6 +29,14 @@ Do the LED’s Light up correctly?
 -By connecting the LED's to a source of power we will be able to verify if they function.
 
 -Finally, what we expect from the Led’s is that they light up the Signboards.
+
+-Test done, 04/10/2022
+
+-Results: After connecting the led's to a power source tne LED's lighted up correctly
+
+-Comments: Did not pose much trouble to test nor to fix.
+
+-Status: Test solved.
 
 **Second Test:**
 
@@ -40,6 +50,8 @@ Does the remote-control function correctly?
 
 -Finally, what we expect from this remote control is to be able to control the LEDs from any distance.
 
+-Status: Test unsolved.
+
 **Third Test:** 
 
 Does the current arrive correctly to the LEDs?
@@ -51,6 +63,15 @@ Does the current arrive correctly to the LEDs?
 -There will be two types of verifications, in first if the LED’s isn’t lighting enough, we already know that it just needs more current, however in the case that the current is too much, we should not try them directly, it would be too risky, we should verify it by the use of an external device or program
 
 -Finally, what we expect from the current is to be able to have LED’s that light properly and that they also don’t suddenly stop functioning
+
+-Test done, 06/10/2022
+
+-Results: The current arrives correctly to the LED's
+
+-Comments: Did not pose much trouble to test nor to fix.
+
+-Status: Test solved.
+
 
 **Fourth Test:** 
 
@@ -64,6 +85,8 @@ Does the sensor recognize day and night time?
 
 -Finally, what we expect from the sensor is to be able to know if it’s day or night, so that the LED’s can also work perfectly.
 
+-Status: Test unsolved
+
 **Fifth Test:**
 
 Does the sensor recognize human beings?
@@ -73,6 +96,8 @@ Does the sensor recognize human beings?
 -If the sensor of the device isn’t able to recognize human beings it will not function properly
 
 -Verified by making people pass through the device, 
+
+-Status: Test unsolved
 
 **Sixth Test:** 
 
@@ -86,6 +111,13 @@ Test the durability of the device
 
 -Finally, what we expect from the device is to be able to withstand different types of conditions, depending of the circumstances of the day.
 
+-Test done, 18/10/2022
+
+-Results: The device has a decent durability.
+
+-Comments: The device withstands cold temperatures (around 15°celsius) without much issues, the same can be said about Hot temperatures, the device should last a couple years.
+
+-Status: Test solved.
 **Seventh Test:**
 
 Can the device function while being underpowered?
@@ -98,6 +130,14 @@ Can the device function while being underpowered?
 
 -Finally, what we expect from the device is to function even if it’s underpowered.
 
+-Test done, 25/10/2022
+
+-Results: The device functions(More or less) while being underpowered
+
+-Comments: The device may be able to function for a bit while being underpowered, however it will be unpredictable, which means that the current should stay constant
+
+-Status: Test solved.
+
 **Eighth Test:**
 
 Can the device function while being overpowered?
@@ -109,6 +149,14 @@ Can the device function while being overpowered?
 - It will be verified by giving more power to the device
 
 -Finally, what we expect from the device is to function even if it’s overpowered.
+
+-Test done, 25/10/2022
+
+-Results: The device burns if the current exceeds it's capability.
+
+-Comments: We tried with a led, and if the current is higher than 12 volts, it will burn, which means that device should not be overpowered.
+
+-Status: Test solved.
 
 
 **Ninth Test:** 
@@ -123,6 +171,8 @@ Does the Lora antenna work
 
 -Finally, what we expect from the device is to have an antenna that functions properly so that the information can be sent.
 
+-Status: Test unsolved.
+
 **Tenth Test:** 
 
 Test what would happen if the current was cut suddenly
@@ -134,6 +184,14 @@ Test what would happen if the current was cut suddenly
 -By suddenly cutting the current of the device.
 
 -Finally, what we expect from the device is to discover if  the device can still function for a bit of time even if the power goes down.
+
+-Test done, 25/10/2022
+
+-Results: The device stops functioning immediately after the current is cut
+
+-Comments: If the device looses it's current, the device stops functioning immediately. If the current stops, the device will not function.
+
+-Status: Test solved.
 
 **Eleventh Tes**t:
 
@@ -147,6 +205,8 @@ What would happen if the device lost its access to the internet
 
 - Finally, what we expect from the device is to be connected to the wifi so that we can have feedback.
 
+Status: Test unsolved
+
 **Twelfth Test:**
 
 Does the lora module work?
@@ -158,6 +218,8 @@ Does the lora module work?
 -Verify the module is working by checking the device on itself.
 
 -Finally, what we expect from the device is to function correctly so that we can use the module’s functionalities.
+
+-Status: Test unsolved.
 
 **Thirteenth test:**
 
@@ -177,6 +239,12 @@ What happens if the user is not in the Lora’s range
 
 -Solution: We would need to create a gateway in Vierzon
 
+-Test re-done: 16/10/2022
+
+-Result: After the installation of the gateway, the user will be able to be in Lora's range.
+
+-Status: Test solved
+
 **Fourteenth test:**
 
 What would happen if the battery was overheated
@@ -189,6 +257,8 @@ What would happen if the battery was overheated
 
 -Finally, what we expect is to have a battery that doesn’t overheat.
 
+-Status: Test unsolved
+
 **Fifteenth test:**
 
 What would happen if we had a breach in our information?
@@ -200,3 +270,5 @@ What would happen if we had a breach in our information?
 -By testing the website in an external kind of way, we could verify if there is information that we do not want to share with everyone.
 
 -Finally, what we expect is to have a secure site.
+
+Status: Test unsolved
