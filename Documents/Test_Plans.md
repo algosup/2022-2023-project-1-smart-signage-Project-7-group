@@ -268,3 +268,24 @@ What would happen if we had a breach in our information?
 -Finally, what we expect is to have a secure site.
 
 Status: Test unsolved
+
+**Sixteenth test:**
+
+Test Downlink functionality
+
+-We need to be sure that the downlink functionality works properly
+
+-If the downlink doesn't work, the rest of the device may be compromised
+
+-By testing the Code in the application ARDUINO IDE, we could verify if the functionality works.
+
+-Finally, what we expect is to have a complete device
+
+-Test done, 27/10/2022
+
+-Results: The Downlink functionality works
+
+-Comments: Tested thanks to Arduino IDE, did not have any kind of issues with it.
+
+-Status: Test solved
+
