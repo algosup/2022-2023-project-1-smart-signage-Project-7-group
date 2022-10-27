@@ -1,6 +1,4 @@
-
-
-Detailed Test Plan:
+# Detailed Test Plan
 
 Structure:
 
@@ -52,7 +50,7 @@ Does the remote-control function correctly?
 
 -Status: Test unsolved.
 
-**Third Test:** 
+**Third Test:**
 
 Does the current arrive correctly to the LEDs?
 
@@ -72,8 +70,7 @@ Does the current arrive correctly to the LEDs?
 
 -Status: Test solved.
 
-
-**Fourth Test:** 
+**Fourth Test:**
 
 Does the sensor recognize day and night time?
 
@@ -95,11 +92,11 @@ Does the sensor recognize human beings?
 
 -If the sensor of the device isn’t able to recognize human beings it will not function properly
 
--Verified by making people pass through the device, 
+-Verified by making people pass through the device,
 
 -Status: Test unsolved
 
-**Sixth Test:** 
+**Sixth Test:**
 
 Test the durability of the device
 
@@ -158,8 +155,7 @@ Can the device function while being overpowered?
 
 -Status: Test solved.
 
-
-**Ninth Test:** 
+**Ninth Test:**
 
 Does the Lora antenna work
 
@@ -173,7 +169,7 @@ Does the Lora antenna work
 
 -Status: Test unsolved.
 
-**Tenth Test:** 
+**Tenth Test:**
 
 Test what would happen if the current was cut suddenly
 
@@ -193,7 +189,7 @@ Test what would happen if the current was cut suddenly
 
 -Status: Test solved.
 
-**Eleventh Tes**t:
+**Eleventh Test**:
 
 What would happen if the device lost its access to the internet
 
@@ -203,7 +199,7 @@ What would happen if the device lost its access to the internet
 
 -Either by verifying the device or by going to the signboard on itself we would be able to know if it had internet or not
 
-- Finally, what we expect from the device is to be connected to the wifi so that we can have feedback.
+-Finally, what we expect from the device is to be connected to the wifi so that we can have feedback.
 
 Status: Test unsolved
 
