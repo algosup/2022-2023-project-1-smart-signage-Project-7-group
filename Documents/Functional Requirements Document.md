@@ -270,4 +270,10 @@ Most of the maintenance and installation tasks can be undertaken by existing sig
 We have noticed that SignAll already has the capacity to create appropriate shielding to accommodate the circuits to protect them from environmental issues. We anticipate that some adjustments will be needed to the manufacturing process of the casings to ensure the board's protection.
 
 ## Conclusion
-### Preparing for the future
+
+To conclude this functional overview of our value proposition, we would like to add share some of the ideas we had in mind, for which we paved the way but still excluded from our V.0 due to lack of time and resource, but that we would still like to develop, given more time.
+- SignAll's backend to monitor all the products
+- Add Expandability to its functionality like yaki products but all in one.
+- Open data weather adaptive brightness
+- Predictive Maintenance (lacking technical on LED lifecycles and behaviour)
+- Motion sensor in combination with adaptive brightness to reduce energy consumption
