@@ -23,11 +23,10 @@ void setIntensity(int brightness, int ambientLight) {
   int value;
   if (currentState == AUTOMATIC) {
     // value = (brightness * brightnessFactor * curve(ambientLight) / 128/128/128) * 512;
-    value = brightness * brightnessFactor;
+    value = brightness * brightnessFactor / 256;
     if (value >= 1024) value = 1023;
   } else {
-    manualBrightness = brightness;
-    value = brightness;
+    value = manualBrightness * brightnessFactor / 256;
   }
   // Debug.print("Set brightness to ");
   // Debug.println(value);

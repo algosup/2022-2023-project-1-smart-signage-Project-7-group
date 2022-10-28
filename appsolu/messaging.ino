@@ -10,15 +10,19 @@ void connectLora() {
   flush();
 }
 
+char toHex(int v) {
+  return "0123456789ABCDEF"[v];
+}
+
 void sendHexMessage(char* message) {
   Lora.print("AT+MSGHEX=\"");
   int size = message[0];
   for (int i = 1; i < size+1; i++) {
     int v = message[i];
     int d = v / 16;
-    Lora.write('0'+d);
+    Lora.write(toHex(d));
     int u = v % 16;
-    Lora.write('0'+u);
+    Lora.write(toHex(u));
   }
   Lora.println("\"");
   free(message);
