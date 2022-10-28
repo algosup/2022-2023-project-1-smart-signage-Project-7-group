@@ -14,7 +14,7 @@ void interpretdownlink(String message)
       currentState = AUTOMATIC;
       break;
     case '3':
-      brightnessfactor = binstrtoc(bin.substring(8,15));
+      brightnessFactor = binstrtoc(bin.substring(8,15));
       break; 
     case '4':
       setTime(binstrtoul(bin.substring(8)));

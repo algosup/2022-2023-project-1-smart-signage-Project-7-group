@@ -23,10 +23,10 @@ Date* timeToDate(unsigned long time) {
   remain = (remain - seconds) / 60; // in minutes
   int minutes = remain % 60;
 
-  remain = (remain - minutes) / 24; // in hours
+  remain = (remain - minutes) / 60; // in hours
   int hours = remain % 24;
 
-  remain = (remain - hours) / 7; // in days
+  remain = (remain - hours) / 24; // in days
   int day = remain % 7;
   
   Date* date = (Date*) malloc(sizeof(Date));

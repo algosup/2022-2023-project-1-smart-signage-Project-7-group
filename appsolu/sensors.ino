@@ -14,9 +14,21 @@ int getPhotoresistor(){
   return photoValue;
 }
 
+int curve(int ambientLight) {
+  return ambientLight;
+}
+
 void setIntensity(int brightness, int ambientLight) {
-  // TODO: LERP values + brightnessCurve
-  int value = brightness*4;
+  // int value = brightness*4;
+  int value;
+  if (currentState == AUTOMATIC) {
+    // value = (brightness * brightnessFactor * curve(ambientLight) / 128/128/128) * 512;
+    value = brightness * brightnessFactor;
+    if (value >= 1024) value = 1023;
+  } else {
+    manualBrightness = brightness;
+    value = brightness;
+  }
   // Debug.print("Set brightness to ");
   // Debug.println(value);
   analogWrite(PWMPin, value);

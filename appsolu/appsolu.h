@@ -50,7 +50,8 @@ const int photoresistorPin = A8;
 
 
 char currentBrightness; // LED brightness in %
-char brightnessfactor = 1;
+char manualBrightness;
+char brightnessFactor = 128;
 State currentState = AUTOMATIC;
 struct Error error;
 long lastTimeOverflowCheck;
