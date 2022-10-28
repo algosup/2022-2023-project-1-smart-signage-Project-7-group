@@ -141,8 +141,19 @@
                     <div class="col-xl-7"> 
                         <div class="white_box card_height_30">
                             <div class="slider ">
-                                <input type="range" min="0" max="255" value="0" oninput="rangeValue.innerText = this.value">
-                                <p id="rangeValue">0</p>
+                                <form action="http://localhost/8090/TTN" method="post">
+                                    <input type="range" name="brightness" min="0" max="255" value="127" oninput="rangeValue.innerText = this.value">
+                                    <p id="rangeValue">0</p>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mode" id="inlineRadio1" value="0">
+                                        <label class="form-check-label" for="inlineRadio1">Automaitc</label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="mode" id="inlineRadio2" value="1">
+                                        <label class="form-check-label" for="inlineRadio2">Manual</label>
+                                      </div>
+                                    <input type="submit" value="Send">
+                                </form>
                             </div>
                         </div>
                         <div class="white_box QA_section card_height_100">
